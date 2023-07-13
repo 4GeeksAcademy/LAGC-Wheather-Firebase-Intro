@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     (async () => {
       const res = await fetch(
-        `${backendHostUrl}/geeks-firebase-72e6d/us-central1/getDayWeather`
+        `http://127.0.0.1:5001/geeks-firebase-72e6d/us-central1/getDayWeather`
       );
 
       const data = await res.json();
