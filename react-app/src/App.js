@@ -1,40 +1,42 @@
-import { useEffect } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
-const backendHostUrl='https://lugras-jubilant-xylophone-46rq6j79jvvcj546-5001.preview.app.github.dev';
+const backendHostUrl = 'https://lugras-jubilant-xylophone-46rq6j79jvvcj546-5001.preview.app.github.dev';
 
 function App() {
+
+   const [temp, setTemp] = useState(0);
+   const [lowtemp, setLowTemp] = useState(0);
+   const [condition, setCondition] = useState("");
+   const [conditionicon, setConditionIcon] = useState("");
+  // const [address, setAddress] = useState("");
+
   useEffect(() => {
     (async () => {
       const res = await fetch(
-        `http://127.0.0.1:5001/geeks-firebase-72e6d/us-central1/getDayWeather`
+        `${backendHostUrl}/geeks-firebase-72e6d/us-central1/getDayWeather`
       );
 
       const data = await res.json();
-
+      
       console.log("The res: ", data);
+      setTemp(data.data.current.temp_f);
+      setLowTemp();
+      setCondition(data.data.current.condition.text);
+      setConditionIcon(data.data.current.condition.icon);
     })();
   }, []);
-
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <div className="appWeather">
+        <h1>The Weather Today</h1>
+        <div>
+             <h3>{temp}</h3>
+{conditionicon}<h1>{condition}</h1>
+        </div>
+      </div>
+    );
+  }
 
-export default App;
+  export default App;
