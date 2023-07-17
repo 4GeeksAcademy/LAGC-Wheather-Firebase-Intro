@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.appWeather{
+ text-align: center;
+  background:lightgray;
+  width:fit-content;
+  padding: 15px;
+  height:auto;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.maintemp{
+  font-size: 60px;
+}
+
+.tableweather{
+  border: 1px solid lightgray;
+display: flex;
+flex-direction: row;
+gap: 20px;
+}
+
+.currenttemp{
+  display: flex;
+  flex-direction: column;
+}
