@@ -14,6 +14,14 @@ function App() {
   const [maxtemp, setMaxTemp] = useState("");
   const [mintemp, setMinTemp] = useState("");
   const [epotch, setEpotch] = useState("");
+  const [epotch1h, setEpotch1H] = useState("");
+  const [epotch2h, setEpotch2H] = useState("");
+  const [hour0, setHour0] = useState("");
+  const [currenttime, setCurrentTime] = useState("");
+
+  const [hours, setHours] = useState([]);
+
+
 
   useEffect(() => {
     (async () => {
@@ -23,17 +31,35 @@ function App() {
 
       const data = await res.json();
 
+      console.log(data);
+
       console.log("The res: ", data);
       setTemp(data.data.current.temp_f);
       setLowTemp();
-      setConditionIcon("http:" + data.data.current.condition.icon);
+      setConditionIcon("https:" + data.data.current.condition.icon);
       setCondition(data.data.current.condition.text);
       setLocation(data.data.location.name);
       setRegion(data.data.location.region);
       setMaxTemp(data.data.forecast.forecastday[0].day.maxtemp_f);
       setMinTemp(data.data.forecast.forecastday[0].day.mintemp_f);
       setEpotch(data.data.current.condition.last_updated_epoch);
-      setEpotch1H(data.data.forecast.forecastday[0].hour[0].temp_f);
+      setHour0(data.data.forecast.forecastday[0].hour[0]);
+
+      setHours(data.data.forecast.forecastday[0].hour);
+
+      //last_updated
+      // for (let i = 0; i < 24; i++) {
+
+      //   if (epotch < setEpotch1H(data.data.forecast.forecastday[0].hour[i].time_epoch)) {
+      //     setEpotch1H(data.data.forecast.forecastday[0].hour[i].temp_f);
+      //     setEpotch2H(data.data.forecast.forecastday[0].hour[i + 1].temp_f);
+      //   }
+
+      // }
+
+
+
+
     })();
   }, []);
 
@@ -50,30 +76,44 @@ function App() {
         <h1>{condition}</h1>
       </div>
       <div>
-      <h3>{location},{region}</h3>
+        <h3>{location},{region}</h3>
+      </div>
+      <div className="maxmintemp">
+        <h3>Max Temp    {maxtemp} °F</h3>
+        {/* </div>
+        <div> */}
+        <h3>Min Temp    {mintemp} °F</h3>
       </div>
       <div>
-      <h3>Max Temperature  {maxtemp} °F</h3>
-        </div>
-        <div>
-      <h3>Min Temperature  {mintemp} °F</h3>
-        </div>
-        <div>
-          <div className="tableweather">
-        
-              <div>
-                <b>Previous Hour</b>
-              </div>
-              <div className="currenttemp">
-              <b>Current Hour</b>
-              {epotch}
-              </div>
-              <div>
-              <b>Next Hour</b>
-              </div>
+        <div className="tableweather">
+
+          {/* <div className="currenttemp">
+            <b>Current Hour</b>
+            {temp} °F
+          </div>
+          <div className="currenttemp">
+            <b>Next 1st Hour</b>
+
+            {epotch1h} °F
 
           </div>
+          <div className="currenttemp">
+            <b>Next 2nd Hour</b>
+            {epotch2h} °F
+          </div> */}
+
+          {hours.map((hour) => (
+            <div>
+              {!!hour.now && "Now"}
+              {hour.formatted_time}
+              {hour.temp_f}
+            </div>
+          ))}
+
         </div>
+        <textarea value={hour0[20]}>
+        </textarea>
+      </div>
     </div>
   );
 }

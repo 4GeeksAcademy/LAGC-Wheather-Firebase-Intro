@@ -37,3 +37,11 @@ gap: 20px;
   display: flex;
   flex-direction: column;
 }
+
+
+.maxmintemp{
+ justify-content: center;
+display: flex;
+flex-direction: row;
+gap: 20px;
+}
